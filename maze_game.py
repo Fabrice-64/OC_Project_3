@@ -11,10 +11,11 @@ If he fails, he dies.
 
 
 Classes :
-Hero,
-Warden,
-Items,
-Walls,
+Items, which includes:
+    MacGyver,
+    Warden,
+    Walls,
+    Collected
 
 Methods:
 
@@ -32,6 +33,8 @@ maze_window = pygame.display.set_mode((600, 600))
 pygame.display.set_caption("OpenClassrooms - MacGyver Maze Game")
 pygame.display.update()
 
+macgyver = Items.MacGyver()
+warden = Items.Warden()
 
 #Set up a maze based on a txt file named maze_level_1
 class Maze():
@@ -42,15 +45,27 @@ class Maze():
         i = 0
         for j in range(len(f)):
             for i in range(len(f[j])):
+                # definition of the 2 variables for the x and y of maze items. Value 40 is for the sprite size
+                x = i * 40
+                y = j * 40
+                # exploration of the file to get the different items of the maze
                 if f[j][i] == "X":
-                    pygame.draw.rect(maze_window, (255, 0, 0), [(i * 40), (j*40), 40, 40])
-                    pygame.display.flip()
+                    pygame.draw.rect(maze_window, (255, 0, 0), [x, y, 40, 40])
+                elif f[j][i] == "W":
+                    maze_window.blit(warden.image, (x, y))
+                elif f[j][i] == "M":
+                    maze_window.blit(macgyver.image, (x,y))
+                pygame.display.flip()
 
-warden  = Items.Warden()
+
+warden = Items.Warden()
 
 #Creates an instance to open a file with the maze
 maze = Maze.draw_maze(maze_level="maze_level_1")
 
+
+
+pygame.display.flip()
 # Keeps the window oppn until intentionally closed
 running = True
 while running:
