@@ -33,11 +33,14 @@ maze_window = pygame.display.set_mode((600, 600))
 pygame.display.set_caption("OpenClassrooms - MacGyver Maze Game")
 pygame.display.update()
 
+# Initializes both main characters of the maze
 macgyver = Items.MacGyver()
 warden = Items.Warden()
 
+
 #Set up a maze based on a txt file named maze_level_1
 class Maze():
+    # Explores line by line the file containing the maze iot extract the different items (walls, characters, etc)
     def draw_maze(maze_level):
         maze = open(maze_level, "r")
         f = maze.readlines()
@@ -45,27 +48,27 @@ class Maze():
         i = 0
         for j in range(len(f)):
             for i in range(len(f[j])):
-                # definition of the 2 variables for the x and y of maze items. Value 40 is for the sprite size
+                # Definition of the 2 variables for the x and y of maze items. Value 40 is for the sprite size
                 x = i * 40
                 y = j * 40
-                # exploration of the file to get the different items of the maze
+                # Exploration of the file to get the different items of the maze
                 if f[j][i] == "X":
+                    # Draws the walls of the maze
                     pygame.draw.rect(maze_window, (255, 0, 0), [x, y, 40, 40])
                 elif f[j][i] == "W":
-                    maze_window.blit(warden.image, (x, y))
+                    maze_window.blit(warden.add_picture(), (x, y))
                 elif f[j][i] == "M":
-                    maze_window.blit(macgyver.image, (x,y))
+                    maze_window.blit(macgyver.add_picture(), (x, y))
                 pygame.display.flip()
+        return maze_window
 
-
-warden = Items.Warden()
 
 #Creates an instance to open a file with the maze
 maze = Maze.draw_maze(maze_level="maze_level_1")
 
-
-
+# Updates the maze_window
 pygame.display.flip()
+
 # Keeps the window oppn until intentionally closed
 running = True
 while running:
