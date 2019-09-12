@@ -14,9 +14,9 @@ class Items:
             self.y = y
 
         @property
-        def add_picture(self):
+        def picture(self):
             # Generates the picture for each and every item described in the subclasses
-            self.image = pygame.image.load(self.picture).convert()
+            self.image = pygame.image.load(self.pic).convert()
             self.image = pygame.transform.scale(self.image, (40, 40))
             return self.image
 
@@ -24,20 +24,19 @@ class Items:
 class Warden(Items):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.picture = warden_picture
+        self.pic = warden_picture
 
 
 class Wall(Items):
     def __init__(self,x,y):
         super().__init__(x,y)
-        self.picture = wall_picture
-
+        self.pic = wall_picture
 
 class Collected(Items):
     id_counter = 0
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.picture = collected_objects_pictures[Collected.id_counter]
+        self.pic = collected_objects_pictures[Collected.id_counter]
         Collected.id_counter +=1
 
 
@@ -45,5 +44,5 @@ class Collected(Items):
 class MacGyver(Items):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.picture = macgyver_picture
+        self.pic = macgyver_picture
 

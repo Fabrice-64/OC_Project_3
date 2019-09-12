@@ -19,13 +19,14 @@ class Maze:
         self.walls = []
         self.corridors = []
         self.objects_to_collect = []
+        # Set up a window for the maze. Length and height are 15 characters, sprite size is 40
+        self.window = pygame.display.set_mode((600, 600))
+        pygame.display.set_caption("OpenClassrooms - MacGyver Maze Game")
 
-    def draw_maze(self, maze_window, maze_level):
+    def draw_maze(self, maze_level):
         # Explores line by line the file containing the maze iot extract the different items (walls, characters, etc)
-        maze = open(maze_level, "r")
-        f = maze.readlines()
-        maze_window.fill((0, 0, 0))
-        i = 0
+        file = open(maze_level, "r")
+        f = file.readlines()
         for j in range(len(f)):
             for i in range(len(f[j])):
                 # Definition of the 2 variables for the x and y of maze items. Value 40 is for the sprite size
@@ -33,38 +34,37 @@ class Maze:
                 y = j * 40
                 # Exploration of the file to get the different items of the maze : wall, hero, warden, corridors
                 if f[j][i] == "X":
-                    # Draws the walls of the maze
+                    # Draws the walls of the maze and stores the parts of the wall in a maze
                     wall = Items.Wall(x, y)
-                    maze_window.blit(wall.add_picture, (x, y))
+                    self.window.blit(wall.picture, (x, y))
                     self.walls.append(wall)
+                    print(wall)
                 elif f[j][i] == "W":
-                    warden = Items.Warden(x, y)
-                    maze_window.blit(warden.add_picture, (x, y))
+                    self.warden = Items.Warden(x, y)
+                    self.window.blit(self.warden.picture, (x, y))
                 elif f[j][i] == "M":
-                    macgyver = Items.MacGyver(x, y)
-                    maze_window.blit(macgyver.add_picture, (x, y))
+                    self.macgyver = Items.MacGyver(x,y)
+                    self.window.blit(self.macgyver.picture, (x, y))
                 else:
                     if x < 600:
                         self.corridors.append((x, y))
 
-    def display_objects(self, maze_window):
+    def display_objects(self):
         # Randomly displays the objects in the maze corridors
         # Chosen variables intend to lay objects far enough from warden
         number_items = len(Items.collected_objects_pictures)
-        low = 5
+        low = 1
         high = len(self.corridors) // (number_items + 2)
         # Scatters the objects on the corridors of the maze by slicing the list of corridor coordinates
         # and randomly laying an object in this very slice
-        for i in range(len(Items.collected_objects_pictures)):
+        for i in range(number_items):
             # Displays the objects in the maze and stores them in a class list
             location = randrange(low, high)
-            print(low, " ", high, " ", location, " ", number_items)
             collected_object = Items.Collected(self.corridors[location][0], self.corridors[location][1])
             low += high
             high += high
             self.objects_to_collect.append(collected_object)
-            print(self.objects_to_collect)
-            maze_window.blit(collected_object.add_picture, (self.corridors[location][0], self.corridors[location][1]))
+            self.window.blit(collected_object.picture, (self.corridors[location][0], self.corridors[location][1]))
 
         pygame.display.flip()
-        return maze_window
+        return self.window

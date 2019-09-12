@@ -25,30 +25,32 @@ Attributes:
 This program is based on Python 3.7.4 and Pygame 1.9.3
 """
 import pygame
+import Items
 from Maze import Maze
 
 pygame.init()
 
-# Set up a window for the maze. Length and height are 15 characters, sprite size is 40
-maze_window = pygame.display.set_mode((600, 600))
-pygame.display.set_caption("OpenClassrooms - MacGyver Maze Game")
-pygame.display.update()
+# Creates an instance to open a file containing the maze and build it up subsequently
+maze = Maze()
+maze.draw_maze(maze_level="maze_level_1")
+maze.display_objects()
 
-
-
-# Creates an instance to open a file containing the maze and builds it up subsequently
-built_maze = Maze()
-built_maze.draw_maze(maze_window, maze_level="maze_level_1")
-built_maze.display_objects(maze_window)
-
-print((built_maze.walls[10].x, built_maze.walls[10].y))
 # Updates the maze_window
 pygame.display.flip()
 
 # Keeps the window open until intentionally closed
 running = True
+x= 0
 while running:
     for event in pygame.event.get():
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_DOWN:
+                maze.macgyver.y = maze.macgyver.y +40
+                maze.window.blit(maze.macgyver.picture, (maze.macgyver.x, maze.macgyver.y))
+
+            pygame.display.flip()
+
         if event.type == pygame.QUIT:
             running = False
 
