@@ -29,8 +29,9 @@ class Warden(Items):
 
 class Wall(Items):
     def __init__(self,x,y):
-        super().__init__(x,y)
+        super().__init__(x, y)
         self.pic = wall_picture
+
 
 class Collected(Items):
     id_counter = 0
@@ -40,9 +41,9 @@ class Collected(Items):
         Collected.id_counter +=1
 
 
-
 class MacGyver(Items):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.pic = macgyver_picture
+
 
