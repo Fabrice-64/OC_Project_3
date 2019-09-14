@@ -22,6 +22,10 @@ class Maze:
         # Set up a window for the maze. Length and height are 15 characters, sprite size is 40
         self.window = pygame.display.set_mode((600, 600))
         pygame.display.set_caption("OpenClassrooms - MacGyver Maze Game")
+        self.my_font = pygame.font.Font("ressource/08634_ClarendonBT.ttf", 24)
+        self.text = "Score : "
+        self.text_window = self.my_font.render(self.text, True, (125,255,125))
+
 
     def draw_maze(self, maze_level):
         # Explores line by line the file containing the maze iot extract the different items (walls, characters, etc)
@@ -47,6 +51,8 @@ class Maze:
                 else:
                     if x < 600:
                         self.corridors.append((x, y))
+        pygame.draw.rect(self.window, (255, 255, 255), (440, 5, 120, 30))
+        self.window.blit(self.text_window, (450, 5))
 
     def display_objects(self):
         # Randomly displays the objects in the maze corridors

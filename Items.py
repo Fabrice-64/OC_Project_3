@@ -1,6 +1,5 @@
 # Set up classes for OC Project3 : build a maze game
 import pygame
-import Maze
 
 # Pictures used in the maze are all listed here below
 warden_picture = 'ressource/Gardien.png'
@@ -62,6 +61,8 @@ class MacGyver(Items):
                     self.move_left(walls, window, speed)
                 if event.key == pygame.K_RIGHT:
                     self.move_right(walls, window, speed)
+            if event.type == pygame.QUIT:
+                exit()
 
     # For each type of movement for McGyver, one function is defined. One additional function has
     # been set up iot draw a black square at the former coordinates of McGyver's picture
@@ -103,13 +104,20 @@ class MacGyver(Items):
     def black_square(self, window):
         pygame.draw.rect(window, (0, 0, 0), (self.x, self.y, 40, 40))
 
-    # Collecting an item when McGyver steps on it
-    def collecting_item(self, window, objects_to_collect):
+    # Collecting an item when McGyver steps on it and updates the score top-right of the screen
+    def collecting_item(self, window, objects_to_collect, my_font):
         for object in objects_to_collect:
-            if abs(self.x - object.x) < 20 and abs(self.y - object.y) < 20:
+            if abs(self.x - object.x) <= 40 and abs(self.y - object.y) <= 40:
                 self.number_collected_items += 1
                 pygame.draw.rect(window, (0, 0, 0), (object.x, object.y, 40, 40))
                 window.blit(self.picture, (self.x, self.y))
                 object.x = 1000
                 object.y = 1000
+                add_score = str(self.number_collected_items)
+                # Displays an updated score
+                pygame.draw.rect(window, (255, 255, 255), (530, 5, 30, 30))
+                text = (add_score)
+                text_window = my_font.render(text, True, (125, 250, 125))
+                window.blit(text_window, (540, 5))
+
                 print(object.x, object.y, self.number_collected_items)

@@ -43,8 +43,9 @@ pygame.display.flip()
 running = True
 while running:
     maze.macgyver.move(maze.walls, maze.window)
-    maze.macgyver.collecting_item(maze.window, maze.objects_to_collect)
+    maze.macgyver.collecting_item(maze.window, maze.objects_to_collect, maze.my_font)
     pygame.display.flip()
+
 
 
 
