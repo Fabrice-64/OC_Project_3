@@ -16,7 +16,6 @@ class Maze:
     def __init__(self):
         # Creates lists containing the objects of each wall sprite, the coordinates of the corridor sprites
         # Including a list containing the objects to be collected by the hero
-        #self.walls = []
         self.corridors = []
         self.walls = {}
         self.objects_to_collect = []
@@ -38,7 +37,6 @@ class Maze:
                     # Draws the walls of the maze and stores the parts of the wall in a maze
                     wall = Items.Wall(x, y)
                     self.window.blit(wall.picture, (x, y))
-                    #self.walls.append(wall)
                     self.walls[(x,y)] = wall
                 elif f[j][i] == "W":
                     self.warden = Items.Warden(x, y)
@@ -66,7 +64,4 @@ class Maze:
             high += high
             self.objects_to_collect.append(collected_object)
             self.window.blit(collected_object.picture, (self.corridors[location][0], self.corridors[location][1]))
-
-
-        pygame.display.flip()
         return self.window

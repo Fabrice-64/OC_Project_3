@@ -35,32 +35,19 @@ maze = Maze()
 maze.draw_maze(maze_level="maze_level_1")
 maze.display_objects()
 
-
 # Updates the maze_window
 pygame.display.flip()
 
-print("Coordonnées initiales : ({}, {})".format(maze.macgyver.x, maze.macgyver.y))
+
 # Keeps the window open until intentionally closed
 running = True
 while running:
-    for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN:
-
-            if event.key == pygame.K_DOWN:
-                print((maze.macgyver.x, maze.macgyver.y))
-                if (maze.macgyver.x, maze.macgyver.y + 40) not in maze.walls:
-                    pygame.draw.rect(maze.window, (0, 0, 0), (maze.macgyver.x, maze.macgyver.y, 40, 40))
-                    maze.macgyver.y += 40
-                    maze.window.blit(maze.macgyver.picture, (maze.macgyver.x, maze.macgyver.y))
-                else:
-                    maze.window.blit(maze.macgyver.picture, (maze.macgyver.x, maze.macgyver.y))
+    maze.macgyver.move(maze.walls, maze.window)
+    maze.macgyver.collecting_item(maze.window, maze.objects_to_collect)
+    pygame.display.flip()
 
 
 
-        pygame.display.flip()
-
-        if event.type == pygame.QUIT:
-            running = False
 
 
 
