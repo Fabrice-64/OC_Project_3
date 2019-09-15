@@ -20,6 +20,7 @@ Maze, which aims at drawing the maze
 
 Methods:
 
+
 Attributes:
 
 This program is based on Python 3.7.4 and Pygame 1.9.3
@@ -44,6 +45,7 @@ running = True
 while running:
     maze.macgyver.move(maze.walls, maze.window)
     maze.macgyver.collecting_item(maze.window, maze.objects_to_collect, maze.my_font)
+    maze.macgyver.meeting_warden(maze.warden, maze.window, maze.my_font_end_game)
     pygame.display.flip()
 
 

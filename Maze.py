@@ -11,6 +11,9 @@ import pygame
 import Items
 from random import randrange
 
+MAZE_HEIGHT = MAZE_WIDTH = 600
+SELECTED_FONT = "ressource/08634_ClarendonBT.ttf"
+
 
 class Maze:
     def __init__(self):
@@ -20,9 +23,10 @@ class Maze:
         self.walls = {}
         self.objects_to_collect = []
         # Set up a window for the maze. Length and height are 15 characters, sprite size is 40
-        self.window = pygame.display.set_mode((600, 600))
+        self.window = pygame.display.set_mode((MAZE_HEIGHT, MAZE_WIDTH))
         pygame.display.set_caption("OpenClassrooms - MacGyver Maze Game")
-        self.my_font = pygame.font.Font("ressource/08634_ClarendonBT.ttf", 24)
+        self.my_font = pygame.font.Font(SELECTED_FONT, 24)
+        self.my_font_end_game = pygame.font.Font(SELECTED_FONT, 48)
         self.text = "Score : "
         self.text_window = self.my_font.render(self.text, True, (125,255,125))
 
