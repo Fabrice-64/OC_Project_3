@@ -38,7 +38,7 @@ class Maze:
         f = file.readlines()
         for j in range(len(f)):
             for i in range(len(f[j])):
-                # Definition of the 2 variables for the x and y of maze items. Value 40 is for the sprite size
+                # Reminder: here are the 2 variables for the x and y of maze items. Value 40 is for the sprite size
                 x = i * Config.SPRITE_SIZE
                 y = j * Config.SPRITE_SIZE
                 # Exploration of the file to get the different items of the maze : wall, hero, warden, corridors
@@ -58,6 +58,7 @@ class Maze:
                     self.window.blit(self.macgyver.picture, (x, y))
                 else:
                     if x < 600:
+                        # Stores the empty spaces in a list, iot be used for displaying the items
                         self.corridors.append((x, y))
         # Draws the white box where the score will be displayed
         pygame.draw.rect(self.window, Config.SCORE_BACKGROUND, (440, 5, 120, 30))
@@ -69,21 +70,24 @@ class Maze:
         number_items = len(Config.objects_to_be_collected_pictures)
         low = 1
         high = len(self.corridors) // (number_items + 2)
-        # Scatters the objects on the corridors of the maze by slicing the list of corridor coordinates
+        # Scatters the objects on the corridors of the maze by slicing the list of corridor coordinates \
         # and randomly laying an object in this very slice
         for i in range(number_items):
             # Displays the objects in the maze and stores them in a class list
             location = randrange(low, high)
+            # The coordinates of the corridors have been saved as tuples as (x,y)
             self.object_to_collect = Items.ToCollect(self.corridors[location][0], self.corridors[location][1])
             self.object_to_collect.picture = self.draw_picture(self.object_to_collect.pic)
+            # Steps up to another slice of the list
             low += high
             high += high
+            # Objects to collect are store in this list, iot be retrieved afterwards
             self.objects_to_collect.append(self.object_to_collect)
             self.window.blit(self.object_to_collect.picture, (self.corridors[location][0], self.corridors[location][1]))
         return self.window
 
     def draw_picture(self, picture):
-        # Generates the picture for each and every item described in the subclasses
+        # Generates the picture for each and every item described in the subclasses of module Items
         self.image = pygame.image.load(picture).convert()
         self.image = pygame.transform.scale(self.image, (Config.SPRITE_SIZE, Config.SPRITE_SIZE))
         return self.image

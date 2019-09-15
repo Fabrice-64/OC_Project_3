@@ -2,7 +2,9 @@
 The purpose of this class is to set up the different items displayed in the maze.
 It deals as well with all the game play, including the movements, scores, and final result.
 
-Methods are
+Methods are exclusively used in McGyver class, as the sole active item of the game.
+
+
 """
 import pygame
 import Config
@@ -97,6 +99,7 @@ class MacGyver(Items):
             window.blit(self.picture, (self.x, self.y))
 
     def black_square(self, window, x, y):
+        # Draws a black square along with any change in the displayed characters or items
         pygame.draw.rect(window, Config.CORRIDORS_COLOR, (x, y, Config.SPRITE_SIZE, Config.SPRITE_SIZE))
 
     def collecting_item(self, window, objects_to_collect, my_font):
@@ -105,7 +108,8 @@ class MacGyver(Items):
             if abs(self.x - object.x) <= Config.SPRITE_SIZE and abs(self.y - object.y) <= Config.SPRITE_SIZE:
                 self.number_collected_items += 1
                 # Reinitialize the background after picking the object
-                pygame.draw.rect(window, Config.CORRIDORS_COLOR, (object.x, object.y, Config.SPRITE_SIZE, Config.SPRITE_SIZE))
+                pygame.draw.rect(window, Config.CORRIDORS_COLOR, (object.x, object.y, Config.SPRITE_SIZE, \
+                Config.SPRITE_SIZE))
                 object.x = object.y = 1000
             # Updates the score on the screen
             add_score = str(self.number_collected_items)
@@ -115,16 +119,18 @@ class MacGyver(Items):
             window.blit(text_window, (540, 5))
 
     def meeting_warden(self, warden, window, my_font_end_game):
+        # This is to set the behavior of both McGyver and the warden when they meet eachother
         if abs(self.x - warden.x) <= Config.SPRITE_SIZE and abs(self.y - warden.y) <= Config.SPRITE_SIZE:
             if self.number_collected_items == 3:
+                # Removing the warden and victory for McGyver if he has collected the 3 items.
                 self.black_square(window, warden.x, warden.y)
                 warden.x = warden.y = 1000
                 window.blit(warden.picture, (warden.x, warden.y))
                 text = "Gagné !"
                 text_window = my_font_end_game.render(text, True, (125, 250, 125))
                 window.blit(text_window, (200, 200))
-
             else:
+                # Putting McGyver into custody if he didn't collect the three items.
                 self.black_square(window, self.x, self.y)
                 self.x = 80
                 self.y = 480

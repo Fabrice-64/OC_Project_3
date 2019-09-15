@@ -18,10 +18,11 @@ Items, which includes:
     Collected
 Maze, which aims at drawing the maze
 
-Methods:
-
+Methods in main:
+    Main doesn't contain any method. They are all to be found either in Maze or Items modules
 
 Attributes:
+    Main doesn't contain any attributes. They are all to be found either in Maze, or Items, or Config modules
 
 This program is based on Python 3.7.4 and Pygame 1.9.3
 """
@@ -43,6 +44,7 @@ pygame.display.flip()
 # Keeps the window open until intentionally closed
 running = True
 while running:
+    # This loop goes through the 3 main phases of this game: movement, collect of the objects, exit the maze
     maze.macgyver.move(maze.walls, maze.window)
     maze.macgyver.collecting_item(maze.window, maze.objects_to_collect, maze.my_font)
     maze.macgyver.meeting_warden(maze.warden, maze.window, maze.my_font_end_game)

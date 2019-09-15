@@ -1,5 +1,6 @@
 """
-This intends to contain all elements needed in the program
+    This module intends to contain all elements needed in the program.
+
 """
 wall_picture = 'ressource/wall.gif'
 macgyver_picture = 'ressource/MacGyver.png'
