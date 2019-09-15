@@ -1,60 +1,51 @@
-# Set up classes for OC Project3 : build a maze game
+"""
+The purpose of this class is to set up the different items displayed in the maze.
+It deals as well with all the game play, including the movements, scores, and final result.
+
+Methods are
+"""
 import pygame
+import Config
 
-# Pictures used in the maze are all listed here below
-warden_picture = 'ressource/Gardien.png'
-macgyver_picture = 'ressource/MacGyver.png'
-wall_picture = 'ressource/wall.gif'
-collected_objects_pictures = ['ressource/seringue.png', 'ressource/ether.png', 'ressource/aiguille.png']
-
-CORRIDORS_COLOR = (0,0,0)
-SPRITE_SIZE = 40
 SPEED = 40
+
 
 class Items:
     def __init__(self, x, y):
         self.x = x
         self.y = y
 
-    @property
-    def picture(self):
-        # Generates the picture for each and every item described in the subclasses
-        self.image = pygame.image.load(self.pic).convert()
-        self.image = pygame.transform.scale(self.image, (SPRITE_SIZE, SPRITE_SIZE))
-        return self.image
-
-
 class Warden(Items):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.pic = warden_picture
+        self.pic = Config.warden_picture
 
 
 class Wall(Items):
     def __init__(self,x,y):
         super().__init__(x, y)
-        self.pic = wall_picture
+        self.pic = Config.wall_picture
 
 
-class Collected(Items):
+class ToCollect(Items):
     id_counter = 0
 
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.pic = collected_objects_pictures[Collected.id_counter]
-        Collected.id_counter +=1
+        self.pic = Config.objects_to_be_collected_pictures[ToCollect.id_counter]
+        ToCollect.id_counter +=1
 
 
 class MacGyver(Items):
 
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.pic = macgyver_picture
+        self.pic = Config.macgyver_picture
         self.number_collected_items = 0
 
     def move(self, walls, window):
         # Due to the size of the sprites, needs to be 40 - Issue to be solved iot to be able to change the speed
-        speed = SPRITE_SIZE
+        speed = Config.SPRITE_SIZE
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
@@ -71,7 +62,7 @@ class MacGyver(Items):
     # For each type of movement for McGyver, one function is defined.
     # One additional function has been set up iot draw a black square at the former coordinates of McGyver's picture
     def move_down(self, walls, window):
-        if (self.x, self.y + SPRITE_SIZE) not in walls:
+        if (self.x, self.y + Config.SPRITE_SIZE) not in walls:
             self.black_square(window, self.x, self.y)
             self.y += SPEED
             window.blit(self.picture, (self.x, self.y))
@@ -82,7 +73,7 @@ class MacGyver(Items):
         if self.y == 0:
             window.blit(self.picture, (self.x, self.y))
         else:
-            if (self.x, self.y - SPRITE_SIZE) not in walls:
+            if (self.x, self.y - Config.SPRITE_SIZE) not in walls:
                 self.black_square(window, self.x, self.y)
                 self.y -= SPEED
                 window.blit(self.picture, (self.x, self.y))
@@ -90,7 +81,7 @@ class MacGyver(Items):
                 window.blit(self.picture, (self.x, self.y))
 
     def move_left(self, walls, window):
-        if (self.x - SPRITE_SIZE, self.y) not in walls:
+        if (self.x - Config.SPRITE_SIZE, self.y) not in walls:
             self.black_square(window, self.x, self.y)
             self.x -= SPEED
             window.blit(self.picture, (self.x, self.y))
@@ -98,7 +89,7 @@ class MacGyver(Items):
             window.blit(self.picture, (self.x, self.y))
 
     def move_right(self, walls, window):
-        if (self.x + SPRITE_SIZE, self.y) not in walls:
+        if (self.x + Config.SPRITE_SIZE, self.y) not in walls:
             self.black_square(window, self.x, self.y)
             self.x += SPEED
             window.blit(self.picture, (self.x, self.y))
@@ -106,26 +97,25 @@ class MacGyver(Items):
             window.blit(self.picture, (self.x, self.y))
 
     def black_square(self, window, x, y):
-        pygame.draw.rect(window, CORRIDORS_COLOR, (x, y, SPRITE_SIZE, SPRITE_SIZE))
+        pygame.draw.rect(window, Config.CORRIDORS_COLOR, (x, y, Config.SPRITE_SIZE, Config.SPRITE_SIZE))
 
     def collecting_item(self, window, objects_to_collect, my_font):
         # Collecting an item when McGyver steps on it and updates the score top-right of the screen
         for object in objects_to_collect:
-            if abs(self.x - object.x) <= SPRITE_SIZE and abs(self.y - object.y) <= SPRITE_SIZE:
+            if abs(self.x - object.x) <= Config.SPRITE_SIZE and abs(self.y - object.y) <= Config.SPRITE_SIZE:
                 self.number_collected_items += 1
                 # Reinitialize the background after picking the object
-                pygame.draw.rect(window, CORRIDORS_COLOR, (object.x, object.y, SPRITE_SIZE, SPRITE_SIZE))
+                pygame.draw.rect(window, Config.CORRIDORS_COLOR, (object.x, object.y, Config.SPRITE_SIZE, Config.SPRITE_SIZE))
                 object.x = object.y = 1000
-                window.blit(self.picture, (object.x, object.y))
             # Updates the score on the screen
             add_score = str(self.number_collected_items)
             text = add_score
-            pygame.draw.rect(window, (255, 255, 255), (530, 5, 30, 30))
-            text_window = my_font.render(text, True, (125, 250, 125))
+            pygame.draw.rect(window, Config.SCORE_BACKGROUND, (530, 5, 30, 30))
+            text_window = my_font.render(text, True, Config.SCORE_COLOR)
             window.blit(text_window, (540, 5))
 
     def meeting_warden(self, warden, window, my_font_end_game):
-        if abs(self.x - warden.x) <= SPRITE_SIZE and abs(self.y - warden.y) <= SPRITE_SIZE:
+        if abs(self.x - warden.x) <= Config.SPRITE_SIZE and abs(self.y - warden.y) <= Config.SPRITE_SIZE:
             if self.number_collected_items == 3:
                 self.black_square(window, warden.x, warden.y)
                 warden.x = warden.y = 1000
