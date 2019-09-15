@@ -9,6 +9,7 @@ collected_objects_pictures = ['ressource/seringue.png', 'ressource/ether.png', '
 
 CORRIDORS_COLOR = (0,0,0)
 SPRITE_SIZE = 40
+SPEED = 40
 
 class Items:
     def __init__(self, x, y):
@@ -57,49 +58,49 @@ class MacGyver(Items):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
-                    self.move_down(walls, window, speed)
+                    self.move_down(walls, window)
                 if event.key == pygame.K_UP:
-                    self.move_up(walls, window, speed)
+                    self.move_up(walls, window)
                 if event.key == pygame.K_LEFT:
-                    self.move_left(walls, window, speed)
+                    self.move_left(walls, window)
                 if event.key == pygame.K_RIGHT:
-                    self.move_right(walls, window, speed)
+                    self.move_right(walls, window)
             if event.type == pygame.QUIT:
                 exit()
 
     # For each type of movement for McGyver, one function is defined.
     # One additional function has been set up iot draw a black square at the former coordinates of McGyver's picture
-    def move_down(self, walls, window, speed):
+    def move_down(self, walls, window):
         if (self.x, self.y + SPRITE_SIZE) not in walls:
             self.black_square(window, self.x, self.y)
-            self.y += speed
+            self.y += SPEED
             window.blit(self.picture, (self.x, self.y))
         else:
             window.blit(self.picture, (self.x, self.y))
 
-    def move_up(self, walls, window, speed):
+    def move_up(self, walls, window):
         if self.y == 0:
             window.blit(self.picture, (self.x, self.y))
         else:
             if (self.x, self.y - SPRITE_SIZE) not in walls:
                 self.black_square(window, self.x, self.y)
-                self.y -= speed
+                self.y -= SPEED
                 window.blit(self.picture, (self.x, self.y))
             else:
                 window.blit(self.picture, (self.x, self.y))
 
-    def move_left(self, walls, window, speed):
+    def move_left(self, walls, window):
         if (self.x - SPRITE_SIZE, self.y) not in walls:
             self.black_square(window, self.x, self.y)
-            self.x -= speed
+            self.x -= SPEED
             window.blit(self.picture, (self.x, self.y))
         else:
             window.blit(self.picture, (self.x, self.y))
 
-    def move_right(self, walls, window, speed):
+    def move_right(self, walls, window):
         if (self.x + SPRITE_SIZE, self.y) not in walls:
             self.black_square(window, self.x, self.y)
-            self.x += speed
+            self.x += SPEED
             window.blit(self.picture, (self.x, self.y))
         else:
             window.blit(self.picture, (self.x, self.y))

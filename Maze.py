@@ -30,7 +30,6 @@ class Maze:
         self.text = "Score : "
         self.text_window = self.my_font.render(self.text, True, (125,255,125))
 
-
     def draw_maze(self, maze_level):
         # Explores line by line the file containing the maze iot extract the different items (walls, characters, etc)
         file = open(maze_level, "r")
@@ -42,7 +41,7 @@ class Maze:
                 y = j * 40
                 # Exploration of the file to get the different items of the maze : wall, hero, warden, corridors
                 if f[j][i] == "X":
-                    # Draws the walls of the maze and stores the parts of the wall in a maze
+                    # Draws the walls of the maze and stores the parts of the wall in a dictionary
                     wall = Items.Wall(x, y)
                     self.window.blit(wall.picture, (x, y))
                     self.walls[(x,y)] = wall
@@ -55,6 +54,7 @@ class Maze:
                 else:
                     if x < 600:
                         self.corridors.append((x, y))
+        # Draws the white box where the score will be displayed
         pygame.draw.rect(self.window, (255, 255, 255), (440, 5, 120, 30))
         self.window.blit(self.text_window, (450, 5))
 
