@@ -1,5 +1,5 @@
-"""
-This is a maze game developed in the framework of OpenClassrooms education program as Python Developper
+"""This is a maze game developed in the framework of OpenClassrooms education
+program as Python Developper.
 
 Purpose of the game: the hero must exit the maze. In order to to so, he has to collect 3 items;
 a needle,
@@ -39,7 +39,6 @@ maze.display_objects()
 
 # Updates the maze_window
 pygame.display.flip()
-
 
 # Keeps the window open until intentionally closed
 running = True
