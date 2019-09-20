@@ -3,6 +3,30 @@ The purpose of this class is to set up the different items displayed in the maze
 It deals as well with all the game play, including the movements, scores, and final result.
 
 Methods are exclusively used in McGyver class, as the sole active item of the game.
+
+Classes : 
+    Items, as parent class of Items, used to define the different items to be used in the game,
+    Warden, as child class of Items, used to depict the warden blocking the exit out of the maze,
+    Wall, as child class of Items, used to depict the walls of the maze,
+    ToCollect, as child class of Items, used to depict the items displayed in the maze and to be collected
+    MacGyver, as child class of Items, used to depict and characterize the hero,
+
+Methods:
+    self.move: 
+        defines the movements of McGyver and is directly linked to the main program. 
+        It calls the following methods:
+    move_down, move_up, move_left, move_right:  
+        which define the x or y axis on which macgyver instance is to move
+    black_square:
+        draws a square of the background color every time an item has been collected or macgyver has moved.
+    collecting_item: 
+        define the conditions under which an item is collected when macgyver instance gets close to it. 
+        It includes the update of macgyver's score and the removal of the collected item.
+
+Methods inherited from pygame:
+    window.blit : displays an image,
+    pygame.draw.rect : displays a rectangle (indeed a square in the game)
+
 """
 import pygame
 
@@ -109,8 +133,9 @@ class MacGyver(Items):
             if abs(self.x - object.x) <= Config.SPRITE_SIZE and abs(self.y - object.y) <= Config.SPRITE_SIZE:
                 self.number_collected_items += 1
                 # Reinitialize the background after picking the object
-                pygame.draw.rect(window, Config.CORRIDORS_COLOR, (object.x, object.y, Config.SPRITE_SIZE,
-                                                                  Config.SPRITE_SIZE))
+                #pygame.draw.rect(window, Config.CORRIDORS_COLOR, (object.x, object.y, Config.SPRITE_SIZE,
+                                                                  #Config.SPRITE_SIZE))
+                self.black_square(window, self.x, self.y)                                                  
                 object.x = object.y = 1000
             # Updates the score on the screen
             add_score = str(self.number_collected_items)

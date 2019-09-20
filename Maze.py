@@ -16,7 +16,6 @@ MAZE_HEIGHT = MAZE_WIDTH = 600
 SELECTED_FONT = "ressource/08634_ClarendonBT.ttf"
 
 
-
 class Maze:
     def __init__(self):
         # Creates lists containing the objects of each wall sprite, the coordinates of the corridor sprites
@@ -30,7 +29,8 @@ class Maze:
         self.my_font = pygame.font.Font(SELECTED_FONT, 24)
         self.my_font_end_game = pygame.font.Font(SELECTED_FONT, 48)
         self.text = "Score : "
-        self.text_window = self.my_font.render(self.text, True, (125, 250, 125))
+        self.text_window = self.my_font.render(
+            self.text, True, (125, 250, 125))
 
     def draw_maze(self, maze_level):
         # Explores line by line the file containing the maze iot extract the different items (walls, characters, etc)
@@ -47,21 +47,23 @@ class Maze:
                     self.wall = Items.Wall(x, y)
                     self.wall.picture = self.draw_picture(self.wall.pic)
                     self.window.blit(self.wall.picture, (x, y))
-                    self.walls[(x,y)] = self.wall
+                    self.walls[(x, y)] = self.wall
                 elif f[j][i] == "W":
                     self.warden = Items.Warden(x, y)
                     self.warden.picture = self.draw_picture(self.warden.pic)
                     self.window.blit(self.warden.picture, (x, y))
                 elif f[j][i] == "M":
-                    self.macgyver = Items.MacGyver(x,y)
-                    self.macgyver.picture = self.draw_picture(self.macgyver.pic)
+                    self.macgyver = Items.MacGyver(x, y)
+                    self.macgyver.picture = self.draw_picture(
+                        self.macgyver.pic)
                     self.window.blit(self.macgyver.picture, (x, y))
                 else:
                     if x < 600:
                         # Stores the empty spaces in a list, iot be used for displaying the items
                         self.corridors.append((x, y))
         # Draws the white box where the score will be displayed
-        pygame.draw.rect(self.window, Config.SCORE_BACKGROUND, (440, 5, 120, 30))
+        pygame.draw.rect(self.window, Config.SCORE_BACKGROUND,
+                         (440, 5, 120, 30))
         self.window.blit(self.text_window, (450, 5))
 
     def display_objects(self):
@@ -76,18 +78,22 @@ class Maze:
             # Displays the objects in the maze and stores them in a class list
             location = randrange(low, high)
             # The coordinates of the corridors have been saved as tuples as (x,y)
-            self.object_to_collect = Items.ToCollect(self.corridors[location][0], self.corridors[location][1])
-            self.object_to_collect.picture = self.draw_picture(self.object_to_collect.pic)
+            self.object_to_collect = Items.ToCollect(
+                self.corridors[location][0], self.corridors[location][1])
+            self.object_to_collect.picture = self.draw_picture(
+                self.object_to_collect.pic)
             # Steps up to another slice of the list
             low += high
             high += high
             # Objects to collect are store in this list, iot be retrieved afterwards
             self.objects_to_collect.append(self.object_to_collect)
-            self.window.blit(self.object_to_collect.picture, (self.corridors[location][0], self.corridors[location][1]))
+            self.window.blit(self.object_to_collect.picture,
+                             (self.corridors[location][0], self.corridors[location][1]))
         return self.window
 
     def draw_picture(self, picture):
         # Generates the picture for each and every item described in the subclasses of module Items
         self.image = pygame.image.load(picture).convert()
-        self.image = pygame.transform.scale(self.image, (Config.SPRITE_SIZE, Config.SPRITE_SIZE))
+        self.image = pygame.transform.scale(
+            self.image, (Config.SPRITE_SIZE, Config.SPRITE_SIZE))
         return self.image
