@@ -6,6 +6,54 @@
     the objects to be collected.
     The corridors are not conceived as objects, however, their coordinates are collected for further use
 
+    Classes:
+        This module contains only one class.
+        Maze:   this class is instantiated only once, when the maze is drawn. It contains all the methods and attributes
+                used for this purpose.
+
+    Methods:
+        pygame.display.set_mode:    used in pygame to display a window.
+        pygame.display.set_caption: used in pygame. Gives a title to the window.
+        pygame.font.Font :  used in pygame to initialize a font.
+        .render :           used in pygame to display a text on the game window.
+        self.window.blit:   used in pygame. Updates the game window.
+        pygame.draw.rect:   used in pygame. It draws a rectangle.
+        draw_maze:  explores the file containing the maze line by line, character by character, instantiate the relevant
+                    object and stores it, if it is a piece of the wall or an object to be collected.
+        display_objects:    this method randomly displays the objects to be displayed in the corridors of the maze.
+                            To reach this, the list containing the coordinates of the corridor squares is sliced,
+                            so that items are scattered all along the path & no object should be to close to the warden.
+        draw_picture:       formats and sizes the picture to fit into the pygame window.
+
+    Attributes:
+        MAZE_HEIGHT and MAZE_WIDTH: constant defining the height and width of the display on which the maze is drawn.
+        SELECTED_FONT:  this is the font used all along the game.
+        self.corridors: is a list containing the tuples with the coordinates of the empty spaces. It is used once
+                        to scatter the items that will be collected later on.
+        self.walls:     is a dictionary in which the instances composing the wall are store.
+                        The key is the tuple representing the coordinates x and y,
+                        The value is the object itself.
+        self.objects_to_collect:    is a list which encompasses all the items to be collected by the hero.
+                        It is employed in the module Items, to check at each movement of the hero if in this list $
+                        an item close to him is stored.
+        self.my_font:   formatted font to be displayed for the score table
+        self.my_font_end_game:  formatted font to be displayed at the centre of the screen at the end of the game.
+        self.text:      displays "Score:" on the scoring board.
+        x, y:           doordinates of each object.
+        self.wall:      object defining a sprite representing a piece of the maze walls. Once instantiated, it is stored
+                        in self.walls dictionary.
+        self.wall.picture, self.warden.picture, self.macgyver.picture, self.object_to_collect.picture:
+                            pygame formatted picture of item or character. It is based on the picture defined
+                            in the Config module and imported at the instantiation under name self.pic.
+        self.warden:    object representing the warden and instantiated in this module.
+        self.macgyver:  object representing the hero and instantiated in this module.
+        number_items:   represents the sum of the objects to be collected. Is used when slicing self.corridors list
+        low  & high:    high and low ends of the sliced self.corridors list.
+        location:       tuple extracted from the sliced self.corridors list. It gives the coordinates of the object to
+                        display
+        self.object_to_collect: object representing the object to collect and instantiated when drawing the maze.
+                        Once instantiated, it is stored in a list.
+        self.image:     used in draw_picture in the formatting process of the picture.
 """
 import pygame
 import Items
