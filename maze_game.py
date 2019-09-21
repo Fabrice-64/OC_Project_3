@@ -53,13 +53,8 @@ running = True
 while running:
     # This loop goes through the 3 main phases of this game: movement, collect of the objects, exit the maze
     maze.macgyver.move(maze.walls, maze.window)
-    maze.macgyver.collecting_item(maze.window, maze.objects_to_collect, maze.my_font)
-    maze.macgyver.meeting_warden(maze.warden, maze.window, maze.my_font_end_game)
+    maze.macgyver.collecting_item(
+        maze.window, maze.objects_to_collect, maze.my_font)
+    maze.macgyver.meeting_warden(
+        maze.warden, maze.window, maze.my_font_end_game)
     pygame.display.flip()
-
-
-
-
-
-
-
