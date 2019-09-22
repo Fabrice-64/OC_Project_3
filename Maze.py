@@ -106,7 +106,7 @@ class Maze:
                         self.macgyver.pic)
                     self.window.blit(self.macgyver.picture, (x, y))
                 else:
-                    if x < 600:
+                    if x < MAZE_HEIGHT:
                         # Stores the empty spaces in a list, iot be used for displaying the items
                         self.corridors.append((x, y))
         # Draws the white box where the score will be displayed
