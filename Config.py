@@ -25,6 +25,7 @@
 
 
 """
+maze_level = "maze_level_1"
 wall_picture = 'ressource/wall.gif'
 macgyver_picture = 'ressource/MacGyver.png'
 warden_picture = 'ressource/Gardien.png'

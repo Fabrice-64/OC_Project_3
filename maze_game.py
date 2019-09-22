@@ -36,13 +36,14 @@ And then the hero inject the warden the drug
 """
 import pygame
 import Items
+import Config
 from Maze import Maze
 
 pygame.init()
 
 # Creates an instance to open a file containing the maze and build it up subsequently
 maze = Maze()
-maze.draw_maze(maze_level="maze_level_1")
+maze.draw_maze(Config.maze_level)
 maze.display_objects()
 
 # Updates the maze_window
